@@ -58,8 +58,6 @@ router.post('/run', (req, res, next) => {
 
 
 
-
-
 router.post('/debug', (req, res, next) => {
     const fs = require('fs');
 
@@ -69,9 +67,28 @@ router.post('/debug', (req, res, next) => {
     \n
     \n${req.body.text_code}`;
 
+    let release = `import RPi.GPIO as GPIO
+    \nGPIO.setmode(GPIO.BCM)
+    \n
+    `;
+
+    const myArray = req.body.text_code.split('\n');
+
+    for (let r in myArray) {
+
+        if (myArray[r].includes("GPIO.setup")) {
+            release += `\n${myArray[r]}`
+
+        }
+    };
+
+
+    release += `\nGPIO.cleanup()`
+    console.log(release);
     try {
         fs.writeFileSync(`${__dirname}/../blockly_code/debug.py`, content);
         // file written successfully
+        fs.writeFileSync(`${__dirname}/../blockly_code/release.py`, release);
     } catch (err) {
         console.error(err);
     }

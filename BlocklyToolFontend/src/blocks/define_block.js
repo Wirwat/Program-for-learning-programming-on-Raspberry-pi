@@ -19,6 +19,16 @@ const define_block = [
         "helpUrl": ""
     },
     {
+        "type": "cleanup",
+        "message0": "cleanup()",
+        
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 150,
+        "tooltip": "",
+        "helpUrl": ""
+    },
+    {
         "type": "gpiosetup",
         "message0": "GPIO.setup ( %1 , %2 )",
         "args0": [
@@ -43,7 +53,7 @@ const define_block = [
         ],
         "previousStatement": null,
         "nextStatement": null,
-        "colour": 300,
+        "colour": 290,
         "tooltip": "",
         "helpUrl": ""
     },
@@ -237,6 +247,15 @@ Blockly.Python['timesleep'] = function (block) {
 };
 
 
+//GPIO.cleanup()
+Blockly.Python['cleanup'] = function (block) {
+
+    // TODO: Assemble Python into code variable.
+    var code = `GPIO.cleanup()\n`;
+    return code;
+};
+
+
 //GPIO.setup([], []);
 
 Blockly.Python['gpiosetup'] = function (block) {
@@ -293,7 +312,11 @@ export const BlocklyAddSLotComponent = () => {
         }, {
             kind: 'BLOCK',
             type: 'gpio_input',
+        }, {
+            kind: 'BLOCK',
+            type: 'cleanup',
         }
+       
     ]
 
 
